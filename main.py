@@ -16,30 +16,27 @@ def find_mismatch(text):
             opening_brackets_stack.append(Bracket(next, i))
 
         if next in ")]}":
-            if not opening_brackets_stack:
+            if len(opening_brackets_stack) == 0:
                 return i + 1
             if not are_matching(opening_brackets_stack[-1].char, next):
                 return i + 1
             opening_brackets_stack.pop()
-    if opening_brackets_stack:
+    if len(opening_brackets_stack) ==0:
+        return "Success"
+    else:
         return opening_brackets_stack[0].position + 1
-
-    return "Success"
 
 
 def main():
     input_type = input()
-    if input_type == 'I':
+    if input_type[:1] == 'I':
         text = input()
-    elif input_type == 'F':
+    elif input_type[:1] == 'F':
         file_name = input()
         with open(file_name, 'r') as file:
             text = file.read()
     mismatch = find_mismatch(text)
-    if isinstance(mismatch, int):
-        print(mismatch)
-    else:
-        print("Success")
+    print(mismatch)
 
 
 if __name__ == "__main__":
